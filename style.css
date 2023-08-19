@@ -1,0 +1,67 @@
+body {
+	margin: 0;
+}
+
+p {
+    margin: 5;
+}
+
+.preloader {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: #e0e0e0;
+	z-index: 1001;
+}
+
+
+.form {
+	width: 100%;
+	margin: 10px 0;
+}
+
+.checkbox-box-box {
+	width: 85%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+}
+
+.checkbox-box {
+	display: flex;
+	margin: 3px auto;
+}
+
+.checkbox {
+	margin: 3px 3px;
+	width: 30px;
+	height: 30px;
+}
+
+.nameSource {
+	margin-top: auto;
+	margin-bottom: auto;
+	font-size: 17px;
+}
+
+.submit {
+	display: flex;
+	margin: 10px auto;
+	height: 3%;
+	font-size: 17px;
+	background-color: #fff;
+	border: solid 0.1px #767676;
+	border-radius: 2px;
+}
+.submit:hover {
+	background-color: #0075ff;
+	border-color: rgb(195, 195, 195);
+}
+
+.article {
+	margin: 0 auto;
+	width: 60%;
+	text-align: center;
+}
