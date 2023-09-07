@@ -20,8 +20,22 @@ rss_feeds = [
     'https://www.rt.com/rss/pop-culture/',
 ]
 
-conn = psycopg2.connect(dbname='test', user='***', password='***', host='pg_db', port='5432')
+conn = psycopg2.connect(dbname='test', user='admin', password='admin', host='pg_db', port='5432')
 cursor = conn.cursor()
+
+cursor.execute(
+    f"""
+    CREATE TABLE articles (
+        id INT GENERATED ALWAYS AS IDENTITY,
+        title varchar(1024) NULL,
+        description varchar(2048) NULL,
+        link varchar(2048) NULL,
+        pubDate timestamp NULL,
+        image varchar(2048) NULL,
+        rss_feed varchar(1024) NULL
+    );
+    """
+)
 
 def normalize_description(description: str):
     description = description.replace('    ', '')
@@ -53,20 +67,30 @@ while 1:
             else:
                 enclosure = enclosure.attrib['url']
             cursor.execute(
-                f"SELECT \
-                    * \
-                FROM \
-                    articles \
-                WHERE \
-                    title='{title}' OR link='{link}'"
+                f"""
+                SELECT
+                    *
+                FROM
+                    articles
+                WHERE
+                    title='{title}' OR link='{link}'
+                """
             )
             if not cursor.fetchall():
                 print(title)
                 cursor.execute(
-                    f"INSERT INTO \
-                        articles (title, description, link, pubDate, image, rss_feed) \
-                    VALUES \
-                        ('{title}', '{description}', '{link}', '{pubDate}', '{enclosure}', '{rss_feed}')"
+                    f"""
+                    INSERT INTO
+                        articles (title, description, link, pubDate, image, rss_feed)
+                    VALUES
+                        ('{title}', '{description}', '{link}', '{pubDate}', '{enclosure}', '{rss_feed}')
+                    """
                 )
+    cursor.execute(
+        f"""
+        DELETE FROM articles
+        WHERE pubDate < now() - interval '30 days'
+        """
+    )
     conn.commit()
     sleep(300)
