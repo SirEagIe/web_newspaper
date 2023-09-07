@@ -25,7 +25,7 @@ cursor = conn.cursor()
 
 cursor.execute(
     f"""
-    CREATE TABLE articles (
+    CREATE TABLE IF NOT EXISTS articles (
         id INT GENERATED ALWAYS AS IDENTITY,
         title varchar(1024) NULL,
         description varchar(2048) NULL,
