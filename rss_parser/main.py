@@ -63,7 +63,7 @@ while 1:
             pubDate = item.find('pubDate').text
             enclosure = item.find('enclosure')
             if enclosure is None:
-                enclosure = None
+                enclosure = 'https://www.rbs.ca/wp-content/themes/rbs/images/news-placeholder.png'
             else:
                 enclosure = enclosure.attrib['url']
             cursor.execute(
